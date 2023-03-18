@@ -3,18 +3,18 @@ Aerodynamics is the study of the dynamics of gases, or the interaction between a
 object and atmosphere causing an airflow around the body.
 
 ### The three basic forces
-	- lift
-	- drag
-	- sideforce
+- lift
+- drag
+- sideforce
 
 #### Drag
 Amount of drag on aircraft is made up of many drag force with three main:
-	- Parasite drag: Combination of different drag forces. Any exposed object on aircraft offers
+- Parasite drag: Combination of different drag forces. Any exposed object on aircraft offers
 		some resistance to the air, and the more objects in the airstream, the more
 		parasite drag. It also includes the drag caused by the material surface.
-	- Profile drag: may be considered the parasite drag of the airfoil. The various components
+- Profile drag: may be considered the parasite drag of the airfoil. The various components
 		of parasite drag are all of the same nature as profile drag. 
-	- Induced drag: action of the airfoil that gives lift, also causes drag
+- Induced drag: action of the airfoil that gives lift, also causes drag
 
 Since fluid always move from high pressure toward low pressure, there is a spanwise movement of air
 from the bottom of the wing outward from the fuselage and upward around the wing tip.
@@ -22,20 +22,20 @@ This flow of air results in "spillage" over the wing tip, thereby setting up whi
 called **vortex**.
 
 ### The three basic moments
-	- Pith (y axis)
-	- Roll (x axis)
-	- Yaw  (z axis)
+- Pith (y axis)
+- Roll (x axis)
+- Yaw  (z axis)
 
 ### The three basic components
-	- Wing
-	- Fuselage
-	- Tail
+- Wing
+- Fuselage
+- Tail
 
 ### Wings || Airfoils
-	- Role is to generate lift
-	- Lift is perpendicular fo incoming flow
-	- Surface designed to obtain desirable reaction from the air through which it moves.
-	- Any part of the aircraft which converts aier resistance into a force useful
+- Role is to generate lift
+- Lift is perpendicular fo incoming flow
+- Surface designed to obtain desirable reaction from the air through which it moves.
+- Any part of the aircraft which converts aier resistance into a force useful
 		for flight is an airfoil.
 
 #### Shape of airfoil
@@ -78,6 +78,8 @@ $$ {P_Above \over P_Below} = {V_Below \over V_Above} $$
 - Being the minimal temperature (about -60°) at tropopause, it rises to - 10° at stratopause,
 	which is much higher.
 ![athmospheric regions](https://cdn.britannica.com/56/97256-050-C79BB432/layers-atmosphere-Earth-yellow-line-height-response.jpg)
+
+
 
 
 

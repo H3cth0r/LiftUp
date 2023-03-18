@@ -1,1 +1,8 @@
+# Ignore blender files
+*.blend1
 
+# Mac DS_store files
+*.DS_Store
+
+# Vim files
+*.swp
