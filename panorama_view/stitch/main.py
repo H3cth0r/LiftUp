@@ -1,8 +1,41 @@
 import cv2
 import numpy as np
 import glob
-import matplotlib.pyplot as plt
+import time
 
+
+"""
+Threshold variable on class, default 0.6
+"""
+
+"""
+def warpImg(img1_t, img2_t, H_t):
+    rows_1, cols_1 = img1_t.shape[:2]
+    rows_2, cols_2 = img2_t.shape[:2]
+
+    list_points_1 = np.float32([[0, 0], [0, rows_1], [cols_1, rows_1], [cols_1, 0]]).reshape(-1, 1, 2)
+    temp_points = np.float32([[0, 0], [0, rows_2], [cols_2, rows_2], [cols_2, 0]]).reshape(-1, 1, 2)
+
+    list_points_2 = cv2.perspectiveTransform(temp_points, H_t)
+
+    list_points = np.concatenate((list_points_1, list_points_2), axis=0)
+
+    [x_min, y_min] = np.int32(list_points.min(axis=0).ravel() - 0.5)
+    [x_max, y_max] = np.int32(list_points.max(axis=0).ravel() + 0.5)
+
+    scale = 2  # Scaling factor
+    dst_size = (int(scale * (x_max - x_min)), int(scale * (y_max - y_min)))
+
+    translation_dist = [-x_min, -y_min]
+
+    H_translation = np.array([[1, 0, translation_dist[0]], [0, 1, translation_dist[1]], [0, 0, 1]])
+    
+    #output_img = cv2.warpPerspective(img2_t, H_translation.dot(H_t), (x_max-x_min, y_max-y_min))
+    output_img = cv2.warpPerspective(img2_t, H_translation.dot(H_t), dst_size)
+    output_img[translation_dist[1]:rows_1+translation_dist[1], translation_dist[0]:cols_1+translation_dist[0]] = img1_t
+
+    return output_img
+"""
 def warpImg(img1_t, img2_t, H_t):
     rows_1, cols_1 = img1_t.shape[:2]
     rows_2, cols_2 = img2_t.shape[:2]
@@ -21,14 +54,14 @@ def warpImg(img1_t, img2_t, H_t):
 
     H_translation = np.array([[1, 0, translation_dist[0]], [0, 1, translation_dist[1]], [0, 0, 1]])
 
-    output_img = cv2.warpPerspective(img2_t, H_translation.dot(H_t), (x_max-x_min, y_max-y_min))
+    dst_size = (x_max-x_min, y_max-y_min)
+    output_img = cv2.warpPerspective(img2_t, H_translation.dot(H_t), dst_size)
     output_img[translation_dist[1]:rows_1+translation_dist[1], translation_dist[0]:cols_1+translation_dist[0]] = img1_t
 
     return output_img
 
-
 def readImgs():
-    path = sorted(glob.glob("src/*.jpg"))
+    path = sorted(glob.glob("src_six/*.png"))
     return [cv2.imread(img) for img in path]
 
 def stitching(imgs_t):
@@ -53,7 +86,7 @@ def stitching(imgs_t):
         good = []
 
         for m, n in matches:
-            if m.distance < 0.6 * n.distance:
+            if m.distance < 0.6  * n.distance:
                 good.append(m)
         
         MIN_MATCH_COUNT = 5
@@ -66,6 +99,7 @@ def stitching(imgs_t):
 
             result = warpImg(img_2, img_1, M)
 
+
             imgs_t.insert(0, result)
 
             if len(imgs_t) == 1:
@@ -76,7 +110,14 @@ def stitching(imgs_t):
 
 if __name__ == "__main__":
     imgs = readImgs()
+    start = time.time()
     res = stitching(imgs)
-    plt.imshow(res)
-    plt.show()
+    end = time.time()
+    print(end - start)
+    cv2.imwrite('processed_image.jpg', res)
+    # Display the image
+    cv2.imshow('Image', res)
 
+    # Wait for a key press and then close the window
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
