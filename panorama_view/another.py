@@ -3,8 +3,10 @@ import numpy as np
 import glob
 
 # Load images from multiple cameras
-img1 = cv2.imread('stitch/src_eight/img(3).png')
-img2 = cv2.imread('stitch/src_eight/img(2).png')
+img1 = cv2.imread('stitch/src_eight/img(2).png')
+img2 = cv2.imread('stitch/src_eight/img(1).png')
+#img1 = cv2.imread('stitch/src_three/img(2).jpg')
+#img2 = cv2.imread('stitch/src_three/img(1).jpg')
 img3 = cv2.imread('stitch/src_eight/img(3).png')
 
 # Resize images to reduce computational cost
@@ -35,10 +37,13 @@ for m, n in matches:
 # Estimate homography using RANSAC
 src_pts = np.float32([kp1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2)
 dst_pts = np.float32([kp2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2)
-H, _ = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+H, _ = cv2.findHomography(src_pts, dst_pts, cv2.LMEDS, 5.0)
 
 # Warp image 1 using the homography
 img1_warped = cv2.warpPerspective(img1, H, (img1.shape[1] + img2.shape[1], img2.shape[0]))
+
+cv2.imshow("warped", img1_warped)
+cv2.waitKey()
 
 # Combine the two images
 result = np.zeros_like(img1_warped)
@@ -52,6 +57,9 @@ contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPL
 max_cnt = max(contours, key=cv2.contourArea)
 x, y, w, h = cv2.boundingRect(max_cnt)
 result = result[y:y+h, x:x+w]
+
+# Save the result image
+cv2.imwrite('result_1.jpg', result)
 
 # Display the result
 cv2.imshow('Panorama', result)
